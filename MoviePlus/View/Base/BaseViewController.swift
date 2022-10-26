@@ -8,13 +8,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    let tableView = UITableView()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        print("First")
+        
+        
     }
-
-
 }
 
