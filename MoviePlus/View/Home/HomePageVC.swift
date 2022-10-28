@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SwiftyJSON
 
 class HomePageVC: UIViewController, UITableViewDelegate {
     
@@ -14,8 +15,8 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     private var movieViewModel : MovieViewModel!
     private var dataSource : MovieTableViewDataSource<HomePageTableViewCell,MovieResultModel>!
     private var tableView = UITableView()
+    private let services = APIService()
     private var coreDataService = CoreDataServices()
-    var counter = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,10 @@ class HomePageVC: UIViewController, UITableViewDelegate {
         configure()
         getService()
         callToViewModelForUpdate()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
 
     func callToViewModelForUpdate() {
@@ -54,12 +59,12 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     @objc func isFavorite(_ sender : UIButton) {
         let point = tableView.convert(CGPoint.zero, from: sender)
         if let indexPath = tableView.indexPathForRow(at: point){
-            if coreDataService.removeFavorite(id: movieDict[indexPath.row].id) {
+            if coreDataService.checkFavorites(id: movieDict[indexPath.row].id){
+                coreDataService.removeFavorites(id: movieDict[indexPath.row].id)
             }else{
-                coreDataService.saveService(dict: movieDict[indexPath.row])
+                coreDataService.saveCore(id: movieDict[indexPath.row].id)
             }
             tableView.reloadData()
-            
         }
     }
     
@@ -70,7 +75,6 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     
     func configure() {
         view.addSubview(tableView)
-        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.width.equalToSuperview()
@@ -79,7 +83,6 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     }
     
     func getService() {
-        let services = APIService()
         services.getData { result in
             switch result{
             case .success(let data):
@@ -106,5 +109,4 @@ class HomePageVC: UIViewController, UITableViewDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     
     }
-
 }

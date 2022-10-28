@@ -20,7 +20,7 @@ class DetailsVC: UIViewController {
         super.viewDidLoad()
         configure()
         viewEdit()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [self] in
             detailsImage.setImageWithKF(url: imageUrl!, size: detailsImage.bounds.size)
             
         }

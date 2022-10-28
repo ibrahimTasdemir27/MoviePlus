@@ -7,79 +7,113 @@
 
 import UIKit
 import CoreData
+import SwiftyJSON
 
 class CoreDataServices{
     
-    let entityName = "DataBase"
+    let jsonEntity = coreTextual.jsonEntity.coreText
+    let movieEntity = coreTextual.movieEntity.coreText
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    lazy var context = appDelegate.persistentContainer.viewContext
+    lazy var onService = NSEntityDescription.insertNewObject(forEntityName: movieEntity, into: context)
+    lazy var  fetchService = NSFetchRequest<NSFetchRequestResult>(entityName: movieEntity)
     
-    func saveService(dict : MovieResultModel ) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let onService = NSEntityDescription.insertNewObject(forEntityName: entityName, into: context)
-        
-        onService.setValue(dict.id, forKey: "id")
-        onService.setValue(dict.original_title, forKey: "title")
-        onService.setValue(dict.overview, forKey: "overview")
-        onService.setValue(imagaBaseUrl + dict.poster_path,forKey: "imageurl")
+    func saveCore(id : Int) {
+        onService.setValue(id, forKey: coreTextual.id.coreText)
         do{
             try context.save()
-        }
-        catch{
+        }catch{
             print(error)
         }
     }
     
-    func removeFavorite(id : Int) -> Bool {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let onService = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-        onService.predicate = NSPredicate(format: "id = %d",id)
-        onService.returnsObjectsAsFaults = false
+    func completionCoreData() -> [Int] {
+        var idService = [Int]()
+        do{
+            let results = try context.fetch(fetchService)
+            for result in results as! [NSManagedObject]{
+                if let id = result.value(forKey: coreTextual.id.coreText) as? Int {
+                    idService.append(id)
+                }
+            }
+            return idService
+        }catch{
+            print(error)
+        }
+        return []
+    }
+    
+    func checkFavorites(id : Int) -> Bool{
+        do{
+            let results = try context.fetch(fetchService)
+            for result in results as! [NSManagedObject]{
+                if id == result.value(forKey: coreTextual.id.coreText) as? Int{
+                    return true
+                }
+            }
+        }catch{
+            print(error)
+        }
+        return false
+    }
+    
+    func removeFavorites(id : Int) {
+        do{
+            let results = try context.fetch(fetchService)
+            for result in results as! [NSManagedObject]{
+                if id == result.value(forKey: coreTextual.id.coreText) as? Int{
+                    context.delete(result)
+                }
+            }
+            try context.save()
+        }catch{
+            print(error)
+        }
+    }
+    
+    func saveJSON(binaryData : Data) {
+        let onService = NSEntityDescription.insertNewObject(forEntityName: jsonEntity, into: context)
+        onService.setValue(binaryData, forKey: coreTextual.currentJSON.coreText)
+        do{
+            try context.save()
+            usDef.setValue(true, forKey: usDefTextual.sourceControl.usDefText)
+        }catch{
+            print(error)
+        }
+    }
+    
+    func deleteJson() {
+        let fetchService = NSFetchRequest<NSFetchRequestResult>(entityName: jsonEntity)
+        fetchService.returnsObjectsAsFaults = false
         
         do{
-            let results = try context.fetch(onService)
-            
+            let results = try context.fetch(fetchService)
             for result in results as! [NSManagedObject] {
-                if let movieID = result.value(forKey: "id") as? Int{
-                    if movieID == id {
-                        context.delete(result)
-                        do {
-                            try context.save()
-                            return true
-                        }catch{
-                            print(error)
-                        }
+                context.delete(result)
+            }
+            try context.save()
+        }catch{
+            print(error)
+        }
+    }
+    
+    func getJson(completion : @escaping(Swift.Result<[MovieResultModel],Error>) -> (Void)) {
+        let fetchService = NSFetchRequest<NSFetchRequestResult>(entityName: jsonEntity)
+        do{
+            let results = try context.fetch(fetchService)
+            for result in results as! [NSManagedObject]{
+                if let binaryData = result.value(forKey: coreTextual.currentJSON.coreText) as? Data {
+                    do{
+                        
+                        let parsingData = try JSONDecoder().decode(MovieModel.self, from: binaryData)
+                        completion(.success(parsingData.results))
+                    }catch{
+                        print(error)
                     }
                 }
             }
         }catch{
-            
+            print(error)
         }
-        return false
     }
-    
-    func checkFavorite(id : Int) -> Bool {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let onService = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-        onService.predicate = NSPredicate(format: "id = %d",id)
-        onService.returnsObjectsAsFaults = false
-        
-        do{
-            let results = try context.fetch(onService)
-            
-            for result in results as! [NSManagedObject] {
-                if let movieID = result.value(forKey: "id") as? Int{
-                  return true
-                }else {
-                    return false
-                }
-            }
-        }catch{
-            
-        }
-        return false
-    }
-    
-    
 }

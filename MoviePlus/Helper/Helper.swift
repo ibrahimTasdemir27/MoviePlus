@@ -30,3 +30,29 @@ enum otherIcons {
         }
     }
 }
+
+enum coreTextual {
+    case jsonEntity
+    case movieEntity
+    case id
+    case currentJSON
+    
+    var coreText : String {
+        switch self{
+        case .jsonEntity :      return "JsonDatabase"
+        case .movieEntity :     return "ForMovieDatabase"
+        case .id :              return "id"
+        case.currentJSON :      return "currentJSON"
+        }
+    }
+}
+
+enum usDefTextual {
+    case sourceControl
+    
+    var usDefText : String {
+        switch self {
+        case .sourceControl :   return "sourceControl"
+        }
+    }
+}

@@ -1,23 +1,21 @@
 //
-//  HomePageTableViewCell.swift
+//  FavoritesTableViewCell.swift
 //  MoviePlus
 //
-//  Created by İbrahim Taşdemir on 26.10.2022.
+//  Created by İbrahim Taşdemir on 28.10.2022.
 //
 
 import UIKit
 import SnapKit
-import Kingfisher
 
-class HomePageTableViewCell: UITableViewCell {
+class FavoritesTableViewCell: UITableViewCell {
 
-    
     @IBOutlet weak var cellView: UIView!
     var moviePoster = UIImageView()
     var movieTitle = UILabel()
     var movieOverview = UILabel()
-    var movieFavorite = UIButton()
     var coreDataService = CoreDataServices()
+    
     class var identifier: String  {
         return String(describing: self)
     }
@@ -26,11 +24,14 @@ class HomePageTableViewCell: UITableViewCell {
         return UINib(nibName: identifier, bundle: nil)
     }
     
-    var movieVM : MovieResultModel? {
-        didSet{
-            movieTitle.text = movieVM?.original_title
-            movieOverview.text = movieVM?.overview
-        }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
     }
     
     func cellEdit() {
@@ -46,16 +47,12 @@ class HomePageTableViewCell: UITableViewCell {
         movieOverview.textColor = UIColor.black.withAlphaComponent(0.75)
         movieOverview.textDropShadow()
         movieOverview.font = .FontsBy.openSansMedium.fonts
-        
-        movieFavorite.imageView?.tintColor = .systemRed
-        movieFavorite.backgroundColor = .clear
     }
     
     func configure() {
         cellView.addSubview(movieTitle)
         cellView.addSubview(moviePoster)
         cellView.addSubview(movieOverview)
-        cellView.addSubview(movieFavorite)
         
         cellView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -78,33 +75,11 @@ class HomePageTableViewCell: UITableViewCell {
         movieOverview.snp.makeConstraints { make in
             make.top.equalTo(movieTitle.snp.bottom)
             make.left.equalTo(moviePoster.snp.right).offset(10)
-            make.right.equalTo(movieFavorite.snp.left)
+            make.right.equalToSuperview().offset(-screenWidth * 0.1)
             make.height.equalToSuperview().multipliedBy(0.58)
         }
-        movieFavorite.snp.makeConstraints { make in
-            make.right.equalToSuperview().offset(-screenWidth * 0.025)
-            make.bottom.equalTo(movieOverview.snp.bottom).offset(3)
-            make.width.equalToSuperview().multipliedBy(0.1)
-            make.height.equalToSuperview().multipliedBy(0.25)
-        }
     }
     
-    func changing(id : Int) {
-        if self.coreDataService.checkFavorites(id: id) {
-            movieFavorite.setImage(otherIcons.notFavorite.imageName.withConfiguration(otherIcons.notFavorite.imageName.config()), for: UIControl.State.normal)
-        }else{
-            movieFavorite.setImage(Icons.favorites.imageName.withConfiguration(Icons.favorites.imageName.config()), for: UIControl.State.normal)
-        }
-    }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-
     
 }
