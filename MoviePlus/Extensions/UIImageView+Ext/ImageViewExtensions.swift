@@ -1,3 +1,4 @@
+
 //
 //  ImageExtensions.swift
 //  MoviePlus
@@ -10,10 +11,9 @@ import Kingfisher
 
 extension UIImageView{
     func setImageWithKF(url: String, size: CGSize) {
-
         let proccess =  DownsamplingImageProcessor(size: size)
-        self.kf.setImage(with: URL(string: url),
-                         placeholder: .none,
-                         options: [.processor(proccess), .scaleFactor(UIScreen.main.scale)], completionHandler: nil)
+            self.kf.setImage(with: URL(string: url),
+                             placeholder: .none,
+                             options: [.processor(proccess), .scaleFactor(UIScreen.main.scale)], completionHandler: nil)
         }
     }

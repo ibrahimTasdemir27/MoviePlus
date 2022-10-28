@@ -11,10 +11,10 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let homePage = HomePageVC()
+        let homePage = UINavigationController(rootViewController: HomePageVC())
         let favoritesPage = FavoritesVC()
         let profilePage = ProfileVC()
-        
+
         homePage.title = "Home"
         favoritesPage.title = "Favorites"
         profilePage.title = "Profile"

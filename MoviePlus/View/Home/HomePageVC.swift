@@ -14,11 +14,12 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     private var movieViewModel : MovieViewModel!
     private var dataSource : MovieTableViewDataSource<HomePageTableViewCell,MovieResultModel>!
     private var tableView = UITableView()
+    private var coreDataService = CoreDataServices()
+    var counter = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.register(HomePageTableViewCell.nib, forCellReuseIdentifier: HomePageTableViewCell.identifier)
+        viewEdit()
         configure()
         getService()
         callToViewModelForUpdate()
@@ -31,6 +32,42 @@ class HomePageVC: UIViewController, UITableViewDelegate {
         }
     }
     
+    func updateDataSource() {
+        self.dataSource = MovieTableViewDataSource(cellIdentifier: HomePageTableViewCell.identifier, items: self.movieViewModel.movieData, configureCell: { cell, mvm in
+            cell.movieFavorite.addTarget(self, action: #selector(self.isFavorite), for: UIControl.Event.touchUpInside)
+            cell.movieTitle.text = mvm.original_title
+            cell.movieOverview.text = mvm.overview
+            cell.configure()
+            cell.cellEdit()
+            cell.changing(id: mvm.id)
+            DispatchQueue.main.async {
+                cell.moviePoster.setImageWithKF(url: imagaBaseUrl + mvm.poster_path, size: cell.moviePoster.bounds.size)
+            }
+           
+        })
+        DispatchQueue.main.async {
+            self.tableView.dataSource = self.dataSource
+            self.tableView.reloadData()
+        }
+    }
+    
+    @objc func isFavorite(_ sender : UIButton) {
+        let point = tableView.convert(CGPoint.zero, from: sender)
+        if let indexPath = tableView.indexPathForRow(at: point){
+            if coreDataService.removeFavorite(id: movieDict[indexPath.row].id) {
+            }else{
+                coreDataService.saveService(dict: movieDict[indexPath.row])
+            }
+            tableView.reloadData()
+            
+        }
+    }
+    
+    func viewEdit() {
+        tableView.delegate = self
+        tableView.register(HomePageTableViewCell.nib, forCellReuseIdentifier: HomePageTableViewCell.identifier)
+    }
+    
     func configure() {
         view.addSubview(tableView)
         
@@ -39,21 +76,6 @@ class HomePageVC: UIViewController, UITableViewDelegate {
             make.width.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-    }
-    
-    func updateDataSource() {
-        self.dataSource = MovieTableViewDataSource(cellIdentifier: HomePageTableViewCell.identifier, items: self.movieViewModel.movieData, configureCell: { cell, mvm in
-            cell.movieTitle.text = mvm.original_title
-            cell.movieOverview.text = mvm.overview
-            cell.moviePoster.setImageWithKF(url: imagaBaseUrl + mvm.poster_path, size: cell.moviePoster.bounds.size)
-            cell.cellEdit()
-        })
-        
-        DispatchQueue.main.async {
-            self.tableView.dataSource = self.dataSource
-            self.tableView.reloadData()
-        }
-        
     }
     
     func getService() {
@@ -70,6 +92,19 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return screenHeight * 0.2
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        goDetails(index: indexPath.row)
+    }
+    
+    func goDetails(index : Int) {
+        let vc = DetailsVC()
+        vc.detailsTitle.text  = movieDict[index].original_title
+        vc.detailsOverview.text = movieDict[index].overview
+        vc.imageUrl = imagaBaseUrl + movieDict[index].poster_path
+        self.navigationController?.pushViewController(vc, animated: true)
+    
     }
 
 }

@@ -27,6 +27,7 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>OpenSans-Medium.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
 		<string>OpenSans-Bold.ttf</string>
 	</array>

@@ -31,10 +31,16 @@
 		4F684F5D2909CDB400E3C5B6 /* MovieTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F5C2909CDB400E3C5B6 /* MovieTableViewDataSource.swift */; };
 		4F684F602909D00C00E3C5B6 /* HomePageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F5E2909D00C00E3C5B6 /* HomePageTableViewCell.swift */; };
 		4F684F612909D00C00E3C5B6 /* HomePageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F684F5F2909D00C00E3C5B6 /* HomePageTableViewCell.xib */; };
-		4F684F642909E5BD00E3C5B6 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F632909E5BD00E3C5B6 /* ImageExtensions.swift */; };
+		4F684F642909E5BD00E3C5B6 /* ImageViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F632909E5BD00E3C5B6 /* ImageViewExtensions.swift */; };
 		4F684F6C2909ED5B00E3C5B6 /* FontsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F6B2909ED5B00E3C5B6 /* FontsExtensions.swift */; };
 		4F684F712909F37000E3C5B6 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F684F6F2909F37000E3C5B6 /* OpenSans-Regular.ttf */; };
 		4F684F722909F37000E3C5B6 /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F684F702909F37000E3C5B6 /* OpenSans-Bold.ttf */; };
+		4F684F76290A7B6F00E3C5B6 /* DetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F74290A7B6F00E3C5B6 /* DetailsVC.swift */; };
+		4F684F77290A7B6F00E3C5B6 /* DetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F684F75290A7B6F00E3C5B6 /* DetailsVC.xib */; };
+		4F684F79290A88EE00E3C5B6 /* OpenSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F684F78290A88EE00E3C5B6 /* OpenSans-Medium.ttf */; };
+		4F684F7C290A8A4400E3C5B6 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F7B290A8A4400E3C5B6 /* UIViewExtensions.swift */; };
+		4F684F7F290A9F3800E3C5B6 /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F7E290A9F3800E3C5B6 /* UIImageExtensions.swift */; };
+		4F684F81290AFAB000E3C5B6 /* CoreDataServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F684F80290AFAB000E3C5B6 /* CoreDataServices.swift */; };
 		9690DBC8C9081AA665C7A5D3 /* Pods_MoviePlus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78E4668A141728E0777C92F9 /* Pods_MoviePlus.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,10 +72,16 @@
 		4F684F5C2909CDB400E3C5B6 /* MovieTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewDataSource.swift; sourceTree = "<group>"; };
 		4F684F5E2909D00C00E3C5B6 /* HomePageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTableViewCell.swift; sourceTree = "<group>"; };
 		4F684F5F2909D00C00E3C5B6 /* HomePageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomePageTableViewCell.xib; sourceTree = "<group>"; };
-		4F684F632909E5BD00E3C5B6 /* ImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
+		4F684F632909E5BD00E3C5B6 /* ImageViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewExtensions.swift; sourceTree = "<group>"; };
 		4F684F6B2909ED5B00E3C5B6 /* FontsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontsExtensions.swift; sourceTree = "<group>"; };
 		4F684F6F2909F37000E3C5B6 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../../../Open_Sans/static/OpenSans/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		4F684F702909F37000E3C5B6 /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Bold.ttf"; path = "../../../Open_Sans/static/OpenSans/OpenSans-Bold.ttf"; sourceTree = "<group>"; };
+		4F684F74290A7B6F00E3C5B6 /* DetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsVC.swift; sourceTree = "<group>"; };
+		4F684F75290A7B6F00E3C5B6 /* DetailsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailsVC.xib; sourceTree = "<group>"; };
+		4F684F78290A88EE00E3C5B6 /* OpenSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Medium.ttf"; path = "../../../Open_Sans/static/OpenSans/OpenSans-Medium.ttf"; sourceTree = "<group>"; };
+		4F684F7B290A8A4400E3C5B6 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		4F684F7E290A9F3800E3C5B6 /* UIImageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
+		4F684F80290AFAB000E3C5B6 /* CoreDataServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataServices.swift; sourceTree = "<group>"; };
 		78E4668A141728E0777C92F9 /* Pods_MoviePlus.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MoviePlus.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9411E25524967238F541F74 /* Pods-MoviePlus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MoviePlus.release.xcconfig"; path = "Target Support Files/Pods-MoviePlus/Pods-MoviePlus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -132,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				4F684F592909CA5600E3C5B6 /* Base */,
+				4F684F73290A7B4000E3C5B6 /* Details */,
 				4F684F3C2909B99500E3C5B6 /* Home */,
 				4F684F3B2909B98B00E3C5B6 /* Favorites */,
 				4F684F3D2909B9A600E3C5B6 /* Profile */,
@@ -160,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				4F684F552909C2C700E3C5B6 /* NetworkServices.swift */,
+				4F684F80290AFAB000E3C5B6 /* CoreDataServices.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -234,8 +248,10 @@
 		4F684F512909BF3C00E3C5B6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4F684F7D290A9EF200E3C5B6 /* UIImage+Ext */,
+				4F684F7A290A8A2D00E3C5B6 /* UIView+Ext */,
 				4F684F6A2909ED4300E3C5B6 /* UIFont+Ext */,
-				4F684F622909E59900E3C5B6 /* UIImage+Ext */,
+				4F684F622909E59900E3C5B6 /* UIImageView+Ext */,
 				4F684F522909BF4600E3C5B6 /* UIColor+Ext */,
 			);
 			path = Extensions;
@@ -259,12 +275,12 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
-		4F684F622909E59900E3C5B6 /* UIImage+Ext */ = {
+		4F684F622909E59900E3C5B6 /* UIImageView+Ext */ = {
 			isa = PBXGroup;
 			children = (
-				4F684F632909E5BD00E3C5B6 /* ImageExtensions.swift */,
+				4F684F632909E5BD00E3C5B6 /* ImageViewExtensions.swift */,
 			);
-			path = "UIImage+Ext";
+			path = "UIImageView+Ext";
 			sourceTree = "<group>";
 		};
 		4F684F6A2909ED4300E3C5B6 /* UIFont+Ext */ = {
@@ -280,8 +296,34 @@
 			children = (
 				4F684F702909F37000E3C5B6 /* OpenSans-Bold.ttf */,
 				4F684F6F2909F37000E3C5B6 /* OpenSans-Regular.ttf */,
+				4F684F78290A88EE00E3C5B6 /* OpenSans-Medium.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		4F684F73290A7B4000E3C5B6 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				4F684F74290A7B6F00E3C5B6 /* DetailsVC.swift */,
+				4F684F75290A7B6F00E3C5B6 /* DetailsVC.xib */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		4F684F7A290A8A2D00E3C5B6 /* UIView+Ext */ = {
+			isa = PBXGroup;
+			children = (
+				4F684F7B290A8A4400E3C5B6 /* UIViewExtensions.swift */,
+			);
+			path = "UIView+Ext";
+			sourceTree = "<group>";
+		};
+		4F684F7D290A9EF200E3C5B6 /* UIImage+Ext */ = {
+			isa = PBXGroup;
+			children = (
+				4F684F7E290A9F3800E3C5B6 /* UIImageExtensions.swift */,
+			);
+			path = "UIImage+Ext";
 			sourceTree = "<group>";
 		};
 		C78FE505CC436ECF7D0CF8B3 /* Pods */ = {
@@ -353,6 +395,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F684F79290A88EE00E3C5B6 /* OpenSans-Medium.ttf in Resources */,
 				4F684F452909BA3400E3C5B6 /* FavoritesVC.xib in Resources */,
 				4F684F412909BA1D00E3C5B6 /* HomePageVC.xib in Resources */,
 				4F684F2B2909A01700E3C5B6 /* LaunchScreen.storyboard in Resources */,
@@ -361,6 +404,7 @@
 				4F684F492909BA4800E3C5B6 /* ProfileVC.xib in Resources */,
 				4F684F282909A01700E3C5B6 /* Assets.xcassets in Resources */,
 				4F684F712909F37000E3C5B6 /* OpenSans-Regular.ttf in Resources */,
+				4F684F77290A7B6F00E3C5B6 /* DetailsVC.xib in Resources */,
 				4F684F722909F37000E3C5B6 /* OpenSans-Bold.ttf in Resources */,
 				4F684F232909A01600E3C5B6 /* Main.storyboard in Resources */,
 			);
@@ -421,13 +465,17 @@
 				4F684F402909BA1D00E3C5B6 /* HomePageVC.swift in Sources */,
 				4F684F262909A01600E3C5B6 /* MoviePlus.xcdatamodeld in Sources */,
 				4F684F482909BA4800E3C5B6 /* ProfileVC.swift in Sources */,
+				4F684F81290AFAB000E3C5B6 /* CoreDataServices.swift in Sources */,
+				4F684F7C290A8A4400E3C5B6 /* UIViewExtensions.swift in Sources */,
 				4F684F5B2909CAF000E3C5B6 /* MovieViewModel.swift in Sources */,
 				4F684F4C2909BC0900E3C5B6 /* Helper.swift in Sources */,
+				4F684F7F290A9F3800E3C5B6 /* UIImageExtensions.swift in Sources */,
 				4F684F582909C3BD00E3C5B6 /* MovieModel.swift in Sources */,
 				4F684F562909C2C700E3C5B6 /* NetworkServices.swift in Sources */,
+				4F684F76290A7B6F00E3C5B6 /* DetailsVC.swift in Sources */,
 				4F684F442909BA3400E3C5B6 /* FavoritesVC.swift in Sources */,
 				4F684F392909B6F300E3C5B6 /* TabBarController.swift in Sources */,
-				4F684F642909E5BD00E3C5B6 /* ImageExtensions.swift in Sources */,
+				4F684F642909E5BD00E3C5B6 /* ImageViewExtensions.swift in Sources */,
 				4F684F502909BEA700E3C5B6 /* Provider.swift in Sources */,
 				4F684F542909BF7400E3C5B6 /* ColorExtension.swift in Sources */,
 				4F684F5D2909CDB400E3C5B6 /* MovieTableViewDataSource.swift in Sources */,

@@ -19,4 +19,5 @@ struct MovieResultModel :Codable {
     let original_title : String
     let overview : String
     let poster_path : String
+    let id : Int
 }
