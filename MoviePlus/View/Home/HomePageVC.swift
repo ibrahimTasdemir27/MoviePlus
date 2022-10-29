@@ -27,7 +27,7 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+       // tableView.reloadData()
     }
 
     func callToViewModelForUpdate() {

@@ -18,12 +18,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.frame = UIScreen.main.bounds
         window?.rootViewController = TabBarController()
         window?.makeKeyAndVisible()
-        
+        isEquable()
 //        UIFont.familyNames.forEach { name in
 //            for fonts in UIFont.fontNames(forFamilyName: name){
 //                
 //            }
 //        }
+    }
+
+    func isEquable() {
+        var movieModel : [MovieResultModel] = []
+        var idService = [Int]()
+        var counter = 0
+        CoreDataServices().getJson { result in
+            switch result{
+            case .success(let data):
+                movieModel = data
+                idService = CoreDataServices().completionCoreData()
+                for id in idService {
+                    for index in 0...movieModel.count - 1 {
+                        if id == movieModel[index].id {
+                            counter += 1
+                        }
+                    }
+                }
+                if counter != idService.count {
+                    usDef.setValue(false, forKey: usDefTextual.sourceControl.usDefText)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

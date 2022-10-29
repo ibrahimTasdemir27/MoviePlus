@@ -59,12 +59,12 @@ class FavoritesVC: UIViewController {
     }
     
     func control() {
-        var counter = 0
         myDict.removeAll()
-        for i in 0...movieDict.count - 1 {
-            if idService.contains(movieDict[i].id) {
-                myDict.append(movieDict[i]) 
-                counter += 1
+        for index in idService.reversed() {
+            for movieIndex in 0...movieDict.count - 1 {
+                if index == movieDict[movieIndex].id {
+                    myDict.append(movieDict[movieIndex])
+                }
             }
         }
     }

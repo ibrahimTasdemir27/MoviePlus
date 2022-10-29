@@ -37,6 +37,7 @@ struct APIService{
                     let res = try JSONDecoder().decode(MovieModel.self, from: binaryData)
                     completion(.success(res.results))
                     if usDef.bool(forKey: usDefTextual.sourceControl.usDefText) != true {
+                        CoreDataServices().deleteJson()
                         CoreDataServices().saveJSON(binaryData: binaryData)
                     }
                 } catch  {

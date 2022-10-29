@@ -14,20 +14,22 @@ class CoreDataServices{
     let jsonEntity = coreTextual.jsonEntity.coreText
     let movieEntity = coreTextual.movieEntity.coreText
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    lazy var context = appDelegate.persistentContainer.viewContext
-    lazy var onService = NSEntityDescription.insertNewObject(forEntityName: movieEntity, into: context)
     lazy var  fetchService = NSFetchRequest<NSFetchRequestResult>(entityName: movieEntity)
     
     func saveCore(id : Int) {
+        let context = appDelegate.persistentContainer.viewContext
+        let onService = NSEntityDescription.insertNewObject(forEntityName: movieEntity, into: context)
         onService.setValue(id, forKey: coreTextual.id.coreText)
         do{
             try context.save()
+            
         }catch{
             print(error)
         }
     }
     
     func completionCoreData() -> [Int] {
+        let context = appDelegate.persistentContainer.viewContext
         var idService = [Int]()
         do{
             let results = try context.fetch(fetchService)
@@ -44,6 +46,7 @@ class CoreDataServices{
     }
     
     func checkFavorites(id : Int) -> Bool{
+        let context = appDelegate.persistentContainer.viewContext
         do{
             let results = try context.fetch(fetchService)
             for result in results as! [NSManagedObject]{
@@ -58,6 +61,7 @@ class CoreDataServices{
     }
     
     func removeFavorites(id : Int) {
+        let context = appDelegate.persistentContainer.viewContext
         do{
             let results = try context.fetch(fetchService)
             for result in results as! [NSManagedObject]{
@@ -66,16 +70,19 @@ class CoreDataServices{
                 }
             }
             try context.save()
+            print("siliniyor")
         }catch{
             print(error)
         }
     }
     
     func saveJSON(binaryData : Data) {
-        let onService = NSEntityDescription.insertNewObject(forEntityName: jsonEntity, into: context)
-        onService.setValue(binaryData, forKey: coreTextual.currentJSON.coreText)
+        let context = appDelegate.persistentContainer.viewContext
+        let onServices = NSEntityDescription.insertNewObject(forEntityName: jsonEntity, into: context)
+        onServices.setValue(binaryData, forKey: coreTextual.currentJSON.coreText)
         do{
             try context.save()
+            print("hakaydetti")
             usDef.setValue(true, forKey: usDefTextual.sourceControl.usDefText)
         }catch{
             print(error)
@@ -83,6 +90,7 @@ class CoreDataServices{
     }
     
     func deleteJson() {
+        let context = appDelegate.persistentContainer.viewContext
         let fetchService = NSFetchRequest<NSFetchRequestResult>(entityName: jsonEntity)
         fetchService.returnsObjectsAsFaults = false
         
@@ -90,6 +98,7 @@ class CoreDataServices{
             let results = try context.fetch(fetchService)
             for result in results as! [NSManagedObject] {
                 context.delete(result)
+                print("hasildi")
             }
             try context.save()
         }catch{
@@ -98,9 +107,10 @@ class CoreDataServices{
     }
     
     func getJson(completion : @escaping(Swift.Result<[MovieResultModel],Error>) -> (Void)) {
-        let fetchService = NSFetchRequest<NSFetchRequestResult>(entityName: jsonEntity)
+        let context = appDelegate.persistentContainer.viewContext
+        let fetchServices = NSFetchRequest<NSFetchRequestResult>(entityName: jsonEntity)
         do{
-            let results = try context.fetch(fetchService)
+            let results = try context.fetch(fetchServices)
             for result in results as! [NSManagedObject]{
                 if let binaryData = result.value(forKey: coreTextual.currentJSON.coreText) as? Data {
                     do{
