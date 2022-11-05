@@ -14,7 +14,6 @@ class FavoritesVC: UIViewController {
     private var myDict : [MovieResultModel] = []
     private var idService = [Int]()
     private let tableView = UITableView()
-    private let coreDataServices = CoreDataServices()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +25,7 @@ class FavoritesVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        idService = CoreDataServices().completionCoreData()
+        idService = CoreDataServices.shared.completionCoreData()
         control()
         tableView.reloadData()
     }
@@ -48,7 +47,7 @@ class FavoritesVC: UIViewController {
     }
     
     func getCoreData() {
-        coreDataServices.getJson { result in
+        CoreDataServices.shared.getJson { result in
             switch result{
             case .success(let data):
                 self.movieDict = data
@@ -95,7 +94,7 @@ extension FavoritesVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath){
         if editingStyle == .delete {
-            CoreDataServices().removeFavorites(id: myDict[indexPath.row].id)
+            CoreDataServices.shared.removeFavorites(id: myDict[indexPath.row].id)
             myDict.remove(at: indexPath.row)
             idService.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)

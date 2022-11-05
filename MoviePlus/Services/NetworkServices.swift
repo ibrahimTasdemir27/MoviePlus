@@ -29,6 +29,7 @@ struct APIService{
     
     func getData(completion : @escaping(Swift.Result<[MovieResultModel] , Error>) -> Void) {
         AF.request(URL(string: baseUrl)!, method: .get).validate().response{ response in
+    
             switch response.result {
             case .success(let value):
                 let json = JSON(value!)
@@ -37,8 +38,8 @@ struct APIService{
                     let res = try JSONDecoder().decode(MovieModel.self, from: binaryData)
                     completion(.success(res.results))
                     if usDef.bool(forKey: usDefTextual.sourceControl.usDefText) != true {
-                        CoreDataServices().deleteJson()
-                        CoreDataServices().saveJSON(binaryData: binaryData)
+                        CoreDataServices.shared.deleteJson()
+                        CoreDataServices.shared.saveJSON(binaryData: binaryData)
                     }
                 } catch  {
                     completion(.failure(error))

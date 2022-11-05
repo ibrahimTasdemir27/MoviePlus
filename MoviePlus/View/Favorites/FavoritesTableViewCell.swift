@@ -14,7 +14,6 @@ class FavoritesTableViewCell: UITableViewCell {
     var moviePoster = UIImageView()
     var movieTitle = UILabel()
     var movieOverview = UILabel()
-    var coreDataService = CoreDataServices()
     
     class var identifier: String  {
         return String(describing: self)

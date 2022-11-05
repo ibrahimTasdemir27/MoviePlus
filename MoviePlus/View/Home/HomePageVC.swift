@@ -16,7 +16,6 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     private var dataSource : MovieTableViewDataSource<HomePageTableViewCell,MovieResultModel>!
     private var tableView = UITableView()
     private let services = APIService()
-    private var coreDataService = CoreDataServices()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,10 +58,10 @@ class HomePageVC: UIViewController, UITableViewDelegate {
     @objc func isFavorite(_ sender : UIButton) {
         let point = tableView.convert(CGPoint.zero, from: sender)
         if let indexPath = tableView.indexPathForRow(at: point){
-            if coreDataService.checkFavorites(id: movieDict[indexPath.row].id){
-                coreDataService.removeFavorites(id: movieDict[indexPath.row].id)
+            if CoreDataServices.shared.checkFavorites(id: movieDict[indexPath.row].id){
+                CoreDataServices.shared.removeFavorites(id: movieDict[indexPath.row].id)
             }else{
-                coreDataService.saveCore(id: movieDict[indexPath.row].id)
+                CoreDataServices.shared.saveCore(id: movieDict[indexPath.row].id)
             }
             tableView.reloadData()
         }

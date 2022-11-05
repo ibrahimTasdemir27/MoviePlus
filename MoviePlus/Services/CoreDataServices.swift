@@ -13,15 +13,26 @@ class CoreDataServices{
     
     let jsonEntity = coreTextual.jsonEntity.coreText
     let movieEntity = coreTextual.movieEntity.coreText
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    lazy var  fetchService = NSFetchRequest<NSFetchRequestResult>(entityName: movieEntity)
+    
+    static var shared = CoreDataServices()
+    
+    lazy var persistentContainer : NSPersistentContainer = {
+        let persistentContainer = NSPersistentContainer(name: coreTextual.coreDataName.coreText)
+        persistentContainer.loadPersistentStores { _, error in
+            print(error?.localizedDescription ?? "")
+        }
+        return persistentContainer
+    }()
+    
+    var moc : NSManagedObjectContext {
+        persistentContainer.viewContext
+    }
     
     func saveCore(id : Int) {
-        let context = appDelegate.persistentContainer.viewContext
-        let onService = NSEntityDescription.insertNewObject(forEntityName: movieEntity, into: context)
-        onService.setValue(id, forKey: coreTextual.id.coreText)
+        let movie = ForMovieDatabase(context: moc)
+        movie.setValue(id, forKey: coreTextual.id.coreText)
         do{
-            try context.save()
+            try moc.save()
             
         }catch{
             print(error)
@@ -29,60 +40,54 @@ class CoreDataServices{
     }
     
     func completionCoreData() -> [Int] {
-        let context = appDelegate.persistentContainer.viewContext
-        var idService = [Int]()
         do{
-            let results = try context.fetch(fetchService)
-            for result in results as! [NSManagedObject]{
-                if let id = result.value(forKey: coreTextual.id.coreText) as? Int {
-                    idService.append(id)
-                }
+            let fetchRequest = NSFetchRequest<ForMovieDatabase>(entityName: movieEntity)
+            let forMovie = try moc.fetch(fetchRequest)
+            var idService = [Int]()
+            forMovie.forEach {
+                idService.append(Int($0.id))
             }
             return idService
-        }catch{
-            print(error)
+        } catch {
+            return []
         }
-        return []
     }
     
     func checkFavorites(id : Int) -> Bool{
-        let context = appDelegate.persistentContainer.viewContext
-        do{
-            let results = try context.fetch(fetchService)
-            for result in results as! [NSManagedObject]{
-                if id == result.value(forKey: coreTextual.id.coreText) as? Int{
-                    return true
+        var bool = false
+        do {
+            let fetchRequest = NSFetchRequest<ForMovieDatabase>(entityName: movieEntity)
+            let forMovie = try moc.fetch(fetchRequest)
+            forMovie.forEach {
+                if id == $0.id {
+                    bool = true
                 }
             }
-        }catch{
-            print(error)
+        } catch {
+            print(error.localizedDescription)
         }
-        return false
+        return bool
     }
     
     func removeFavorites(id : Int) {
-        let context = appDelegate.persistentContainer.viewContext
-        do{
-            let results = try context.fetch(fetchService)
-            for result in results as! [NSManagedObject]{
-                if id == result.value(forKey: coreTextual.id.coreText) as? Int{
-                    context.delete(result)
+        do {
+            let fetchRequest = NSFetchRequest<ForMovieDatabase>(entityName: movieEntity)
+            let forMovie = try moc.fetch(fetchRequest)
+            forMovie.forEach {
+                if id == $0.id {
+                    moc.delete($0)
                 }
             }
-            try context.save()
-            print("siliniyor")
-        }catch{
-            print(error)
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
     func saveJSON(binaryData : Data) {
-        let context = appDelegate.persistentContainer.viewContext
-        let onServices = NSEntityDescription.insertNewObject(forEntityName: jsonEntity, into: context)
-        onServices.setValue(binaryData, forKey: coreTextual.currentJSON.coreText)
+        let json = JsonDatabase(context: moc)
+        json.setValue(binaryData, forKey: coreTextual.currentJSON.coreText)
         do{
-            try context.save()
-            print("hakaydetti")
+            try moc.save()
             usDef.setValue(true, forKey: usDefTextual.sourceControl.usDefText)
         }catch{
             print(error)
@@ -90,40 +95,33 @@ class CoreDataServices{
     }
     
     func deleteJson() {
-        let context = appDelegate.persistentContainer.viewContext
-        let fetchService = NSFetchRequest<NSFetchRequestResult>(entityName: jsonEntity)
-        fetchService.returnsObjectsAsFaults = false
-        
-        do{
-            let results = try context.fetch(fetchService)
-            for result in results as! [NSManagedObject] {
-                context.delete(result)
-                print("hasildi")
+        do {
+            let fetchRequest = NSFetchRequest<JsonDatabase>(entityName: jsonEntity)
+            let json = try moc.fetch(fetchRequest)
+            json.forEach {
+                moc.delete($0)
             }
-            try context.save()
-        }catch{
-            print(error)
+        } catch {
+            print(error.localizedDescription)
         }
     }
     
     func getJson(completion : @escaping(Swift.Result<[MovieResultModel],Error>) -> (Void)) {
-        let context = appDelegate.persistentContainer.viewContext
-        let fetchServices = NSFetchRequest<NSFetchRequestResult>(entityName: jsonEntity)
-        do{
-            let results = try context.fetch(fetchServices)
-            for result in results as! [NSManagedObject]{
-                if let binaryData = result.value(forKey: coreTextual.currentJSON.coreText) as? Data {
-                    do{
-                        
-                        let parsingData = try JSONDecoder().decode(MovieModel.self, from: binaryData)
+        do {
+            let fethRequest = NSFetchRequest<JsonDatabase>(entityName: jsonEntity)
+            let json = try moc.fetch(fethRequest)
+            json.forEach {
+                if $0.currentJSON != nil {
+                    do {
+                        let parsingData = try JSONDecoder().decode(MovieModel.self, from: $0.currentJSON!)
                         completion(.success(parsingData.results))
-                    }catch{
-                        print(error)
+                    } catch {
+                        print(error.localizedDescription)
                     }
                 }
             }
-        }catch{
-            print(error)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

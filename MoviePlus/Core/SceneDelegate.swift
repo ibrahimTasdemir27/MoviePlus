@@ -30,11 +30,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var movieModel : [MovieResultModel] = []
         var idService = [Int]()
         var counter = 0
-        CoreDataServices().getJson { result in
+        CoreDataServices.shared.getJson { result in
             switch result{
             case .success(let data):
                 movieModel = data
-                idService = CoreDataServices().completionCoreData()
+                idService = CoreDataServices.shared.completionCoreData()
                 for id in idService {
                     for index in 0...movieModel.count - 1 {
                         if id == movieModel[index].id {

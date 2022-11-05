@@ -17,7 +17,6 @@ class HomePageTableViewCell: UITableViewCell {
     var movieTitle = UILabel()
     var movieOverview = UILabel()
     var movieFavorite = UIButton()
-    var coreDataService = CoreDataServices()
     class var identifier: String  {
         return String(describing: self)
     }
@@ -90,7 +89,7 @@ class HomePageTableViewCell: UITableViewCell {
     }
     
     func changing(id : Int) {
-        if self.coreDataService.checkFavorites(id: id) {
+        if CoreDataServices.shared.checkFavorites(id: id) {
             movieFavorite.setImage(otherIcons.notFavorite.imageName.withConfiguration(otherIcons.notFavorite.imageName.config()), for: UIControl.State.normal)
         }else{
             movieFavorite.setImage(Icons.favorites.imageName.withConfiguration(Icons.favorites.imageName.config()), for: UIControl.State.normal)

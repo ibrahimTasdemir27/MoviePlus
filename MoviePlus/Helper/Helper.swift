@@ -32,6 +32,7 @@ enum otherIcons {
 }
 
 enum coreTextual {
+    case coreDataName
     case jsonEntity
     case movieEntity
     case id
@@ -39,6 +40,7 @@ enum coreTextual {
     
     var coreText : String {
         switch self{
+        case .coreDataName :    return "MoviePlus"
         case .jsonEntity :      return "JsonDatabase"
         case .movieEntity :     return "ForMovieDatabase"
         case .id :              return "id"
